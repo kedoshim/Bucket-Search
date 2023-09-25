@@ -12,6 +12,9 @@ Baldes::Baldes(int aguaA, int aguaB)
 
     if((baldes[0].agua > baldes[0].capacidade)||(baldes[0].agua < 0) || (baldes[1].agua > baldes[1].capacidade) || (baldes[1].agua < 0))
         isValid = false;
+
+    if((baldes[0].agua + baldes[1].agua == 4) || (baldes[0].agua + baldes[1].agua == 7))
+        isSolution = true;
 }
 
 Baldes::~Baldes()
@@ -79,6 +82,12 @@ Baldes Baldes::passaB2A()
     bool Baldes::getisValid(){
         return isValid;
     }
+
+//Verificação de solução
+    bool Baldes::getisSolution(){
+        return isSolution;
+    }
+
 
 //Escolha de regra
     Baldes Baldes::executarRegra(int nRegra){

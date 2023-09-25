@@ -16,12 +16,7 @@ class Baldes
         balde baldes[2];
 
         bool isValid = true;
-
-    public:
-
-        Baldes();
-        Baldes(int capacidadeA, int capacidadeB);
-        ~Baldes();
+        bool isSolution = false;
 
         //Regras de Transição
         Baldes esvaziaBaldeA(); //1
@@ -31,8 +26,17 @@ class Baldes
         Baldes passaA2B();      //5
         Baldes passaB2A();      //6
 
+    public:
+
+        Baldes();
+        Baldes(int capacidadeA, int capacidadeB);
+        ~Baldes();        
+
         //Verificação de integridade
         bool getisValid();
+
+        //Verificação de solução
+        bool getisSolution();
 
         //Escolha de regra
         Baldes executarRegra(int nRegra);
