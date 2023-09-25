@@ -7,8 +7,12 @@ Baldes::Baldes(){
 
 Baldes::Baldes(int aguaA, int aguaB)
 {
+    baldes[0].capacidade=3;
+    baldes[1].capacidade=5;
+
     baldes[0].agua=aguaA;
     baldes[1].agua=aguaB;
+
 
     if((baldes[0].agua > baldes[0].capacidade)||(baldes[0].agua < 0) || (baldes[1].agua > baldes[1].capacidade) || (baldes[1].agua < 0))
         isValid = false;
@@ -124,4 +128,13 @@ Baldes* Baldes::executarRegra(int nRegra)
 void Baldes::print()
 {
     std::cout<<baldes[0].agua<<" "<<baldes[1].agua<<std::endl;
+}
+
+//Verificar igualdade
+bool Baldes::isEqualTo(Baldes* balde2)
+{
+    if(baldes[0].agua == balde2->baldes[0].agua && baldes[1].agua == balde2->baldes[1].agua)
+        return true;
+    else
+        return false;
 }

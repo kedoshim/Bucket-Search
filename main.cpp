@@ -1,4 +1,3 @@
-//#include "Baldes.h"
 #include "BuscaIrrevogavel.h"
 #include "BuscaBacktracking.h"
 #include "BuscaEmLargura.h"
@@ -25,6 +24,8 @@ int main()
     cout << "(separe os indicies por espaços)\n";
     getline(cin, ordem); 
 
+    //default
+    ordem ="6 5 4 3 2 1";
 
     int ordemRegras[6];
     int i = 0; 

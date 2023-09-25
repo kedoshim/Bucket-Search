@@ -47,6 +47,9 @@ class Baldes
         //Printar os valores
         void print();
 
+        //Verificar igualdade
+        bool isEqualTo(Baldes* balde2);
+
 
 };
 
