@@ -1,3 +1,6 @@
+#ifndef BALDES_H
+#define BALDES_H
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -46,3 +49,5 @@ class Baldes
 
 
 };
+
+#endif

@@ -1,4 +1,8 @@
-#include "Baldes.h"
+//#include "Baldes.h"
+#include "BuscaIrrevogavel.h"
+#include "BuscaBacktracking.h"
+#include "BuscaEmLargura.h"
+#include "BuscaEmProfundidade.h"
 #include <sstream>
 
 using namespace std;
@@ -32,6 +36,8 @@ int main()
         ordemRegras[i] = std::stoi(word);
         i++;
     }
+
+    BuscaEmProfundidade(ordemRegras);
 
     return 0;
 }

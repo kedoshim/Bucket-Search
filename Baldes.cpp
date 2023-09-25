@@ -114,6 +114,9 @@ Baldes* Baldes::executarRegra(int nRegra)
     case 6:
         return passaB2A();
         break;
+    
+    default:
+        return new Baldes(-1,-1);
     }
 }
 
