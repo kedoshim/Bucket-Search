@@ -41,5 +41,8 @@ class Baldes
         //Escolha de regra
         Baldes executarRegra(int nRegra);
 
+        //Printar os valores
+        void print();
+
 
 };

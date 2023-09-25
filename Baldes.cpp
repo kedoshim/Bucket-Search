@@ -79,37 +79,46 @@ Baldes Baldes::passaB2A()
 }
 
 //Verificação de integridade
-    bool Baldes::getisValid(){
-        return isValid;
-    }
+bool Baldes::getisValid()
+{
+    return isValid;
+}
 
 //Verificação de solução
-    bool Baldes::getisSolution(){
-        return isSolution;
-    }
+bool Baldes::getisSolution()
+{
+    return isSolution;
+}
 
 
 //Escolha de regra
-    Baldes Baldes::executarRegra(int nRegra){
-        switch (nRegra)
-        {
-        case 1:
-            return esvaziaBaldeA();
-            break;
-        case 2:
-            return esvaziaBaldeB();
-            break;
-        case 3:
-            return encheBaldeA();
-            break;
-        case 4:
-            return encheBaldeB();
-            break;
-        case 5:
-            return passaA2B();
-            break;
-        case 6:
-            return passaB2A();
-            break;
-        }
+Baldes Baldes::executarRegra(int nRegra)
+{
+    switch (nRegra)
+    {
+    case 1:
+        return esvaziaBaldeA();
+        break;
+    case 2:
+        return esvaziaBaldeB();
+        break;
+    case 3:
+        return encheBaldeA();
+        break;
+    case 4:
+        return encheBaldeB();
+        break;
+    case 5:
+        return passaA2B();
+        break;
+    case 6:
+        return passaB2A();
+        break;
     }
+}
+
+//Printar os valores
+void Baldes::print()
+{
+    std::cout<<baldes[0].agua<<" "<<baldes[1].agua<<std::endl;
+}
