@@ -21,9 +21,11 @@ int main()
     cout << "(separe os indicies por espaços)\n";
     getline(cin, ordem); 
 
+
     int ordemRegras[6];
     int i = 0; 
 
+    //Transforma a string 'ordem' em um vetor de int 'ordemRegras'
     stringstream ss(ordem);
     string word;
     while (ss >> word && i<6) {

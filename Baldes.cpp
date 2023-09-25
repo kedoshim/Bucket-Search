@@ -20,14 +20,6 @@ Baldes::~Baldes()
 }
 
 //Regras de Transição
-Baldes Baldes::encheBaldeA()
-{
-    return Baldes(baldes[0].capacidade , baldes[1].agua);
-}
-Baldes Baldes::encheBaldeB()
-{
-    return Baldes(baldes[0].agua , baldes[1].capacidade);
-}
 Baldes Baldes::esvaziaBaldeA()
 {
     return Baldes(0 , baldes[1].agua);
@@ -35,6 +27,14 @@ Baldes Baldes::esvaziaBaldeA()
 Baldes Baldes::esvaziaBaldeB()
 {
     return Baldes(baldes[0].agua , 0);
+}
+Baldes Baldes::encheBaldeA()
+{
+    return Baldes(baldes[0].capacidade , baldes[1].agua);
+}
+Baldes Baldes::encheBaldeB()
+{
+    return Baldes(baldes[0].agua , baldes[1].capacidade);
 }
 Baldes Baldes::passaA2B()
 {
