@@ -1,4 +1,4 @@
-#include "BuscaIrrevogavel.cpp"
+#include "Baldes.h"
 #include <sstream>
 
 using namespace std;
@@ -32,8 +32,6 @@ int main()
         ordemRegras[i] = std::stoi(word);
         i++;
     }
-
-    BuscaIrrevogavel(ordemRegras);
 
     return 0;
 }

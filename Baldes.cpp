@@ -23,23 +23,23 @@ Baldes::~Baldes()
 }
 
 //Regras de Transição
-Baldes Baldes::esvaziaBaldeA()
+Baldes* Baldes::esvaziaBaldeA()
 {
-    return Baldes(0 , baldes[1].agua);
+    return new Baldes(0 , baldes[1].agua);
 }
-Baldes Baldes::esvaziaBaldeB()
+Baldes* Baldes::esvaziaBaldeB()
 {
-    return Baldes(baldes[0].agua , 0);
+    return new Baldes(baldes[0].agua , 0);
 }
-Baldes Baldes::encheBaldeA()
+Baldes* Baldes::encheBaldeA()
 {
-    return Baldes(baldes[0].capacidade , baldes[1].agua);
+    return new Baldes(baldes[0].capacidade , baldes[1].agua);
 }
-Baldes Baldes::encheBaldeB()
+Baldes* Baldes::encheBaldeB()
 {
-    return Baldes(baldes[0].agua , baldes[1].capacidade);
+    return new Baldes(baldes[0].agua , baldes[1].capacidade);
 }
-Baldes Baldes::passaA2B()
+Baldes* Baldes::passaA2B()
 {
     int novaAguaA = 0;
     int novaAguaB = 0;
@@ -49,16 +49,16 @@ Baldes Baldes::passaA2B()
     {
         novaAguaB = baldes[1].agua + baldes[0].agua;
         novaAguaA = 0;
-        return Baldes(novaAguaA,novaAguaB);
+        return new Baldes(novaAguaA,novaAguaB);
     }
     else
     {
         novaAguaB = baldes[1].agua + capacidadeRestanteB;
         novaAguaA = baldes[0].agua -capacidadeRestanteB;
-        return Baldes(novaAguaA,novaAguaB);
+        return new Baldes(novaAguaA,novaAguaB);
     } 
 }
-Baldes Baldes::passaB2A()
+Baldes* Baldes::passaB2A()
 {
     int novaAguaA = 0;
     int novaAguaB = 0;
@@ -68,13 +68,13 @@ Baldes Baldes::passaB2A()
     {
         novaAguaA = baldes[0].agua + baldes[1].agua;
         novaAguaB = 0;
-        return Baldes(novaAguaA,novaAguaB);
+        return new Baldes(novaAguaA,novaAguaB);
     }
     else
     {
         novaAguaA = baldes[0].agua + capacidadeRestanteA;
         novaAguaB = baldes[1].agua -capacidadeRestanteA;
-        return Baldes(novaAguaA,novaAguaB);
+        return new Baldes(novaAguaA,novaAguaB);
     }
 }
 
@@ -92,7 +92,7 @@ bool Baldes::getisSolution()
 
 
 //Escolha de regra
-Baldes Baldes::executarRegra(int nRegra)
+Baldes* Baldes::executarRegra(int nRegra)
 {
     switch (nRegra)
     {

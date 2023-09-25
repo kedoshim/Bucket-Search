@@ -19,12 +19,12 @@ class Baldes
         bool isSolution = false;
 
         //Regras de Transição
-        Baldes esvaziaBaldeA(); //1
-        Baldes esvaziaBaldeB(); //2
-        Baldes encheBaldeA();   //3
-        Baldes encheBaldeB();   //4
-        Baldes passaA2B();      //5
-        Baldes passaB2A();      //6
+        Baldes* esvaziaBaldeA(); //1
+        Baldes* esvaziaBaldeB(); //2
+        Baldes* encheBaldeA();   //3
+        Baldes* encheBaldeB();   //4
+        Baldes* passaA2B();      //5
+        Baldes* passaB2A();      //6
 
     public:
 
@@ -39,7 +39,7 @@ class Baldes
         bool getisSolution();
 
         //Escolha de regra
-        Baldes executarRegra(int nRegra);
+        Baldes* executarRegra(int nRegra);
 
         //Printar os valores
         void print();
