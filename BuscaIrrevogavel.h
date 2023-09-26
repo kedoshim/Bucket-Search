@@ -5,10 +5,6 @@
 
 void BuscaIrrevogavel(int ordem[])
 {
-
-
-
-
     
 }
 

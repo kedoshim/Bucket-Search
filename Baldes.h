@@ -8,46 +8,45 @@
 
 class Baldes
 {
-    private:
+private:
+    struct balde
+    {
+        int agua = 0;
+        int capacidade = 0;
+    };
 
-        struct balde
-        {
-            int agua = 0;
-            int capacidade = 0;
-        };
+    balde baldes[2];
 
-        balde baldes[2];
+    bool isValid = true;
+    bool isSolution = false;
 
-        bool isValid = true;
-        bool isSolution = false;
+    // Regras de Transição
+    Baldes *esvaziaBaldeA(); // 1
+    Baldes *esvaziaBaldeB(); // 2
+    Baldes *encheBaldeA();   // 3
+    Baldes *encheBaldeB();   // 4
+    Baldes *passaA2B();      // 5
+    Baldes *passaB2A();      // 6
 
-        //Regras de Transição
-        Baldes* esvaziaBaldeA(); //1
-        Baldes* esvaziaBaldeB(); //2
-        Baldes* encheBaldeA();   //3
-        Baldes* encheBaldeB();   //4
-        Baldes* passaA2B();      //5
-        Baldes* passaB2A();      //6
+public:
+    Baldes();
+    Baldes(int capacidadeA, int capacidadeB);
+    ~Baldes();
 
-    public:
+    // Verificação de integridade
+    bool getisValid();
 
-        Baldes();
-        Baldes(int capacidadeA, int capacidadeB);
-        ~Baldes();        
+    // Verificação de solução
+    bool getisSolution();
 
-        //Verificação de integridade
-        bool getisValid();
+    // Escolha de regra
+    Baldes *executarRegra(int nRegra);
 
-        //Verificação de solução
-        bool getisSolution();
+    // Printar os valores
+    void print();
 
-        //Escolha de regra
-        Baldes* executarRegra(int nRegra);
-
-        //Printar os valores
-        void print();
-
-
+    // Verificar igualdade
+    bool isEqualTo(Baldes *balde2);
 };
 
 #endif
