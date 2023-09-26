@@ -4,11 +4,17 @@
 #include "No.h"
 #include <stack>
 
+int regraN;
 
-
-void BuscaEmProfundidade(int ordem[])
+No* proximaRegra(int i,int nbaldes)
 {
-    No* noAtual = new No();
+
+}
+
+
+void BuscaEmProfundidade(int nBaldes)
+{
+    No* noAtual = new No(nBaldes);
 
     No* noFilho;
 
@@ -19,9 +25,9 @@ void BuscaEmProfundidade(int ordem[])
         //Visualização
         noAtual->getBaldes()->print();
 
-        for(int i = 0; i<6; i++)
+        for(int i = 0; i<(nBaldes*2)+(nBaldes*(nBaldes-1)); i++)
         {
-            noFilho = new No(noAtual,noAtual->getBaldes()->executarRegra(ordem[i]));
+            noFilho = proximaRegra(i,nBaldes);
             
             if(!(noFilho->getBaldes()->getisValid()&&noFilho->checkUnico()))
                 delete noFilho;

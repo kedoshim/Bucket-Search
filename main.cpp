@@ -38,7 +38,7 @@ int main()
         i++;
     }
 
-    BuscaEmProfundidade(ordemRegras);
+    //BuscaEmProfundidade(ordemRegras);
 
     return 0;
 }

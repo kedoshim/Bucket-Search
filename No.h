@@ -21,6 +21,12 @@ class No
             profundidade = noPai->getProfundidade()+1;
 
         }
+        No(int nBaldes)
+        {
+            baldes = new Baldes(nBaldes);
+            pai = nullptr;
+            profundidade = 0;
+        }
         int getProfundidade(){
             return profundidade;
         }
