@@ -20,25 +20,30 @@ int main()
     cout << "6. Passa agua de B para A\n";
 
     string ordem;
+    unsigned int nBalde;
+
     cout << "\nQual será a ordem de aplicação das regras?\n";
     cout << "(separe os indicies por espaços)\n";
-    getline(cin, ordem); 
+
+    cin>>nBalde;
+
+    //getline(cin, ordem); 
 
     //default
     ordem ="6 5 4 3 2 1";
 
-    int ordemRegras[6];
+    unsigned int ordemRegras[6];
     int i = 0; 
 
     //Transforma a string 'ordem' em um vetor de int 'ordemRegras'
     stringstream ss(ordem);
     string word;
     while (ss >> word && i<6) {
-        ordemRegras[i] = std::stoi(word);
+        ordemRegras[i] = (unsigned int) abs(std::stoi(word));
         i++;
     }
 
-    //BuscaEmProfundidade(ordemRegras);
+    BuscaEmProfundidade(nBalde,true);
 
     return 0;
 }

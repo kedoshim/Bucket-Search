@@ -21,7 +21,7 @@ class No
             profundidade = noPai->getProfundidade()+1;
 
         }
-        No(int nBaldes)
+        No(unsigned int nBaldes)
         {
             baldes = new Baldes(nBaldes);
             pai = nullptr;

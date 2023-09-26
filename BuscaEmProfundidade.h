@@ -4,16 +4,14 @@
 #include "No.h"
 #include <stack>
 
-int regraN;
-
-No* proximaRegra(int i,int nbaldes)
+void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
 {
+    unsigned int n = 0;
+    unsigned int regra;
+    if(!crescente)
+        n=((nBaldes*2)+(nBaldes*(nBaldes-1)))-1;
 
-}
 
-
-void BuscaEmProfundidade(int nBaldes)
-{
     No* noAtual = new No(nBaldes);
 
     No* noFilho;
@@ -25,9 +23,10 @@ void BuscaEmProfundidade(int nBaldes)
         //Visualização
         noAtual->getBaldes()->print();
 
-        for(int i = 0; i<(nBaldes*2)+(nBaldes*(nBaldes-1)); i++)
+        for(unsigned int i = 0; i<(nBaldes*2)+(nBaldes*(nBaldes-1)); i++)
         {
-            noFilho = proximaRegra(i,nBaldes);
+            regra = static_cast<unsigned int>(std::abs(static_cast<int>(n - i)));
+            noFilho = new No(noAtual,noAtual->getBaldes()->executarRegra(regra));
             
             if(!(noFilho->getBaldes()->getisValid()&&noFilho->checkUnico()))
                 delete noFilho;

@@ -1,122 +1,129 @@
 #include "Baldes.h"
 #include <functional>       
+#include <cmath>
 
 Baldes::Baldes(){
-    baldes[0].capacidade=3;
-    baldes[1].capacidade=5;
+    baldes[0]->capacidade=3;
+    baldes[1]->capacidade=5;
 }
 
-Baldes::Baldes(int aguaA, int aguaB)
+Baldes::Baldes(unsigned int aguaA, unsigned int aguaB)
 {
-    baldes[0].capacidade=3;
-    baldes[1].capacidade=5;
+    baldes[0]->capacidade=3;
+    baldes[1]->capacidade=5;
 
-    baldes[0].agua=aguaA;
-    baldes[1].agua=aguaB;
+    baldes[0]->agua=aguaA;
+    baldes[1]->agua=aguaB;
 }
 
-Baldes::Baldes(int numeroBaldes)
+Baldes::Baldes(unsigned int numeroBaldes)
 {    
     if(numeroBaldes>23)
         numeroBaldes=23;
     nBaldes = numeroBaldes;
-    
 
-    for(unsigned int i = 0; i< (unsigned int) nBaldes-1; i++)
+    for(unsigned int i = 0; i< nBaldes; i++)
     {
-        baldes[i].capacidade = primos[i];
+        baldes.push_back(new balde());
+        baldes[i]->capacidade = primos[i];
     }   
 
-    inicializaRegras();
+    findSolucoes();
 }
 
-Baldes::Baldes(Baldes* b)
+Baldes::Baldes(const Baldes& b)
 {
-    baldes = b->baldes;
-    solucoes = b->solucoes;
-    nBaldes = b->nBaldes;
+    nBaldes = b.nBaldes;
+    isValid = b.isValid;
+    isSolution = b.isSolution;
+
+    // Create new balde structures and copy values
+    for (const balde* originalBalde : b.baldes)
+    {
+        balde* newBalde = new balde;
+        newBalde->agua = originalBalde->agua;
+        newBalde->capacidade = originalBalde->capacidade;
+        baldes.push_back(newBalde);
+    }
+
+    // Copy the solutions
+    solucoes = b.solucoes;
 }
 
 Baldes::~Baldes()
 {
+    
 
+    for (balde* b : baldes)
+    {
+        delete b;
+    }
+    baldes.clear();
 }
 
 //Regras de Transição
 Baldes* Baldes::esvaziaBalde(unsigned int nbalde)
 {
-    int aguaAtual = baldes[nbalde].agua;
-    baldes[nbalde].agua = 0;
-    Baldes* baldeNovo = new Baldes(this); 
-    baldes[nbalde].agua = aguaAtual;
+    unsigned int aguaAtual = baldes[nbalde]->agua;
+    baldes[nbalde]->agua = 0;
+    Baldes baldeNovo(*this); 
+    baldes[nbalde]->agua = aguaAtual;
     
-    return baldeNovo; 
+    return new Baldes(baldeNovo);
 }
 Baldes* Baldes::encheBalde(unsigned int nbalde)
 {
-    int aguaAtual = baldes[nbalde].agua;
-    baldes[nbalde].agua = baldes[nbalde].capacidade;
-    Baldes* baldeNovo = new Baldes(this); 
-    baldes[nbalde].agua = aguaAtual;
+    unsigned int aguaAtual = baldes[nbalde]->agua;
+    baldes[nbalde]->agua = baldes[nbalde]->capacidade;
+    Baldes baldeNovo(*this); 
+    baldes[nbalde]->agua = aguaAtual;
 
-    return baldeNovo;
+    return new Baldes(baldeNovo);
 }
 Baldes* Baldes::passaAgua(unsigned int baldeA, unsigned int baldeB)
 {
-    int aguaAtualA = baldes[baldeA].agua;
-    int aguaAtualB = baldes[baldeB].agua;   
+    unsigned int aguaAtualA = baldes[baldeA]->agua;
+    unsigned int aguaAtualB = baldes[baldeB]->agua;   
 
-    int novaAguaA;
-    int novaAguaB; 
+    unsigned int novaAguaA;
+    unsigned int novaAguaB; 
     
-    int capacidadeRestanteB = baldes[baldeB].capacidade - baldes[baldeB].agua;
+    unsigned int capacidadeRestanteB = baldes[baldeB]->capacidade - baldes[baldeB]->agua;
 
-    if(baldes[baldeA].agua < capacidadeRestanteB)
+    if(baldes[baldeA]->agua < capacidadeRestanteB)
     {
-        novaAguaB = baldes[baldeB].agua + baldes[baldeA].agua;
+        novaAguaB = baldes[baldeB]->agua + baldes[baldeA]->agua;
         novaAguaA = 0;
     }
     else
     {
-        novaAguaB = baldes[baldeB].agua + capacidadeRestanteB;
-        novaAguaA = baldes[baldeA].agua - capacidadeRestanteB;
+        novaAguaB = baldes[baldeB]->agua + capacidadeRestanteB;
+        novaAguaA = baldes[baldeA]->agua - capacidadeRestanteB;
     } 
 
-    baldes[baldeB].agua = novaAguaB;
-    baldes[baldeA].agua = novaAguaA;
+    baldes[baldeB]->agua = novaAguaB;
+    baldes[baldeA]->agua = novaAguaA;
 
-    Baldes* baldeNovo = new Baldes(this); 
+    Baldes baldeNovo(*this); 
 
-    baldes[baldeA].agua = aguaAtualA;
-    baldes[baldeB].agua = aguaAtualB;
+    baldes[baldeA]->agua = aguaAtualA;
+    baldes[baldeB]->agua = aguaAtualB;
 
-    return baldeNovo;
+    return new Baldes(baldeNovo); // Return a dynamically allocated copy
 }
-
-void Baldes::inicializaRegras() {
-    regras.push_back([this](unsigned int baldeA, unsigned int baldeB) {
-        return this->encheBalde(baldeA);
-    });
-
-    regras.push_back([this](unsigned int baldeA, unsigned int baldeB) {
-        return this->esvaziaBalde(baldeA);
-    });
-
-    regras.push_back([this](unsigned int baldeA, unsigned int baldeB) {
-        return this->passaAgua(baldeA, baldeB);
-    });
-}
-
 
 
 void Baldes::findSolucoes()
 {
-    int soma = 0;
-    for(unsigned int i = 0; i <(unsigned int) nBaldes ; i++){
-        soma+=baldes[i].capacidade;
-    }
-    solucoes[0] = soma/2;
-    solucoes[1] = primos[(unsigned int) nBaldes];
+    /* unsigned int som = 0;
+    for(unsigned int i = 0; i <nBaldes-1; i++){
+        som+=baldes[i]->capacidade; 
+    }*/
+    /* solucoes.push_back(baldes[nBaldes-2]->capacidade*2); */
+    solucoes.push_back(nBaldes*nBaldes);
+    solucoes.push_back(primos[nBaldes]);
+
+    std::cout<<"solucoes:"<<solucoes[0]<<" "<<solucoes[1]<<"\n";
 }
 
 
@@ -125,9 +132,9 @@ void Baldes::findSolucoes()
 //Verificação de integridade
 bool Baldes::getisValid()
 {
-    for(unsigned int i =0; i< (unsigned int) nBaldes; i++)
+    for(unsigned int i =0; i< nBaldes; i++)
     {
-        if(baldes[i].agua>baldes[i].capacidade || baldes[i].agua < 0)
+        if(baldes[i]->agua>baldes[i]->capacidade)
             return false;
     }
     return true;
@@ -136,9 +143,8 @@ bool Baldes::getisValid()
 //Verificação de solução
 bool Baldes::getisSolution()
 {
-    int soma = 0;
-    for(unsigned int i =0; i<(unsigned int) nBaldes; i++)
-        soma+=baldes[i].agua;
+    for(unsigned int i =0; i<nBaldes; i++)
+        soma+=baldes[i]->agua;
 
     for(unsigned int i = 0; i < solucoes.size() ; i++)
         if(soma==solucoes[i])
@@ -154,50 +160,78 @@ bool Baldes::getisSolution()
     switch (nRegra)
     {
     case 1:
-        return esvaziaBaldeA();
+        return esvaziaBalde(0);
         break;
     case 2:
-        return esvaziaBaldeB();
+        return esvaziaBalde(1);
         break;
     case 3:
-        return encheBaldeA();
+        return encheBalde(0);
         break;
     case 4:
-        return encheBaldeB();
+        return encheBalde(1);
         break;
     case 5:
-        return passaA2B();
+        return passaAgua(0,1);
         break;
     case 6:
-        return passaB2A();
+        return passaAgua(1,0);
         break;
     
     default:
-        return new Baldes(-1,-1);
+        std::cout<<"instrucao invalida\n";
+        return nullptr;
     }
 } */
 
-Baldes* Baldes::executarRegra(int nRegra)
+Baldes* Baldes::executarRegra(unsigned int nRegra)
 {
-    if(nRegra>nBaldes*2)
+    nRegra = nRegra+1;
+    unsigned int a;
+    unsigned int b;
+    if(nRegra<=nBaldes)
     {
-
+        a = nRegra;
+        b = 0;
+        return esvaziaBalde(a-1);
     }
+    else if (nRegra<=nBaldes*2)
+    {
+        a = nRegra - nBaldes;
+        b=0;
+        return encheBalde(a-1);
+    }
+    else if (nRegra <= (nBaldes*2) + (nBaldes*(nBaldes-1)))
+    {
+        unsigned int ruleNumber = nRegra - (nBaldes*2);
+        a = static_cast<unsigned int>(std::trunc((ruleNumber - 1) / (nBaldes-1))) + 1;
+        b = (ruleNumber - 1) % (nBaldes-1) + 1;
+
+        if (b >= a)
+            b = b + 1;
+
+        return passaAgua(a-1, b-1);
+    }
+    std::cout<<"Valor de Regra de transicao invalido\n";
+    return nullptr;
 }
 
 //Printar os valores
 void Baldes::print()
 {
-    for(unsigned int i =0 ; i<(unsigned int) nBaldes ; i++)
-        std::cout<<baldes[i].agua<<" ";
+    for(unsigned int i =0 ; i<nBaldes ; i++)
+        std::cout<<baldes[i]->agua<<" ";
+    
+    std::cout<<"- "<<soma;
+    std::cout<<"\n";
 }
 
 //Verificar igualdade
 bool Baldes::isEqualTo(Baldes* balde2)
 {
-    for(unsigned int i =0; i< (unsigned int) nBaldes; i++)
+    for(unsigned int i =0; i< nBaldes; i++)
     {
-        if(baldes[i].agua != balde2->baldes[i].agua)
+        if(baldes[i]->agua != balde2->baldes[i]->agua)
             return false;
     }
     return true;
