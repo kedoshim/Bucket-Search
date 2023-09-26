@@ -2,18 +2,13 @@
 #include <functional>       
 #include <cmath>
 
+std::vector<unsigned int> Baldes::primos = {3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+std::vector<unsigned int> Baldes::solucoes;
+unsigned int Baldes::nBaldes = 2;
+
 Baldes::Baldes(){
     baldes[0]->capacidade=3;
     baldes[1]->capacidade=5;
-}
-
-Baldes::Baldes(unsigned int aguaA, unsigned int aguaB)
-{
-    baldes[0]->capacidade=3;
-    baldes[1]->capacidade=5;
-
-    baldes[0]->agua=aguaA;
-    baldes[1]->agua=aguaB;
 }
 
 Baldes::Baldes(unsigned int numeroBaldes)
@@ -34,8 +29,6 @@ Baldes::Baldes(unsigned int numeroBaldes)
 Baldes::Baldes(const Baldes& b)
 {
     nBaldes = b.nBaldes;
-    isValid = b.isValid;
-    isSolution = b.isSolution;
 
     // Create new balde structures and copy values
     for (const balde* originalBalde : b.baldes)
@@ -52,8 +45,6 @@ Baldes::Baldes(const Baldes& b)
 
 Baldes::~Baldes()
 {
-    
-
     for (balde* b : baldes)
     {
         delete b;
@@ -71,6 +62,7 @@ Baldes* Baldes::esvaziaBalde(unsigned int nbalde)
     
     return new Baldes(baldeNovo);
 }
+
 Baldes* Baldes::encheBalde(unsigned int nbalde)
 {
     unsigned int aguaAtual = baldes[nbalde]->agua;
@@ -80,6 +72,7 @@ Baldes* Baldes::encheBalde(unsigned int nbalde)
 
     return new Baldes(baldeNovo);
 }
+
 Baldes* Baldes::passaAgua(unsigned int baldeA, unsigned int baldeB)
 {
     unsigned int aguaAtualA = baldes[baldeA]->agua;
@@ -112,22 +105,12 @@ Baldes* Baldes::passaAgua(unsigned int baldeA, unsigned int baldeB)
     return new Baldes(baldeNovo); // Return a dynamically allocated copy
 }
 
-
 void Baldes::findSolucoes()
 {
-    /* unsigned int som = 0;
-    for(unsigned int i = 0; i <nBaldes-1; i++){
-        som+=baldes[i]->capacidade; 
-    }*/
-    /* solucoes.push_back(baldes[nBaldes-2]->capacidade*2); */
-    solucoes.push_back(nBaldes*nBaldes);
+    solucoes.push_back(nBaldes * nBaldes);
     solucoes.push_back(primos[nBaldes]);
-
     std::cout<<"solucoes:"<<solucoes[0]<<" "<<solucoes[1]<<"\n";
 }
-
-
-
 
 //Verificação de integridade
 bool Baldes::getisValid()
@@ -152,7 +135,6 @@ bool Baldes::getisSolution()
     
     return false;
 }
-
 
 //Escolha de regra
 /* Baldes* Baldes::executarRegra(int nRegra)
@@ -184,6 +166,7 @@ bool Baldes::getisSolution()
     }
 } */
 
+//se receber de 0 a 5, ele gera as mesmas regras da main
 Baldes* Baldes::executarRegra(unsigned int nRegra)
 {
     nRegra = nRegra+1;
@@ -216,7 +199,6 @@ Baldes* Baldes::executarRegra(unsigned int nRegra)
     return nullptr;
 }
 
-//Printar os valores
 void Baldes::print()
 {
     for(unsigned int i =0 ; i<nBaldes ; i++)
@@ -226,7 +208,7 @@ void Baldes::print()
     std::cout<<"\n";
 }
 
-//Verificar igualdade
+//verifica se dois Baldes são iguais
 bool Baldes::isEqualTo(Baldes* balde2)
 {
     for(unsigned int i =0; i< nBaldes; i++)
