@@ -56,6 +56,16 @@ class Baldes
         //Verificar igualdade
         bool isEqualTo(Baldes* balde2);
 
+        unsigned int getNBaldes();
+
+        unsigned int getAgua(unsigned int balde);
+
+        unsigned int getCapacidade(unsigned int balde);
+
+        unsigned int getSoma();
+
+        void printSolucoes();
+
 
 };
 

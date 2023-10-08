@@ -1,11 +1,16 @@
+#ifndef NO_H
+#define MO_H
+
+
 #include "Baldes.h"
 
 class No
 {
     private:
+
         Baldes* baldes;
         No* pai;
-        int profundidade = 0;
+        unsigned int profundidade = 0;
 
     public:
         No()
@@ -27,7 +32,11 @@ class No
             pai = nullptr;
             profundidade = 0;
         }
-        int getProfundidade(){
+        ~No()
+        {
+            delete  baldes;
+        }
+        unsigned int getProfundidade(){
             return profundidade;
         }
     
@@ -54,5 +63,8 @@ class No
                     noPai=noPai->getPai();
             }
             return true;
-        }
+        } 
 };
+
+
+#endif

@@ -2,7 +2,7 @@
 #include <functional>       
 #include <cmath>
 
-std::vector<unsigned int> Baldes::primos = {3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97};
+std::vector<unsigned int> Baldes::primos = {3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239};
 std::vector<unsigned int> Baldes::solucoes;
 unsigned int Baldes::nBaldes = 2;
 
@@ -13,8 +13,8 @@ Baldes::Baldes(){
 
 Baldes::Baldes(unsigned int numeroBaldes)
 {    
-    if(numeroBaldes>23)
-        numeroBaldes=23;
+    if(numeroBaldes>47)
+        numeroBaldes=47;
     nBaldes = numeroBaldes;
 
     for(unsigned int i = 0; i< nBaldes; i++)
@@ -29,6 +29,7 @@ Baldes::Baldes(unsigned int numeroBaldes)
 Baldes::Baldes(const Baldes& b)
 {
     nBaldes = b.nBaldes;
+    soma = b.soma;
 
     // Create new balde structures and copy values
     for (const balde* originalBalde : b.baldes)
@@ -53,22 +54,27 @@ Baldes::~Baldes()
 }
 
 //Regras de Transição
-Baldes* Baldes::esvaziaBalde(unsigned int nbalde)
+Baldes* Baldes::esvaziaBalde(unsigned int baldeN)
 {
-    unsigned int aguaAtual = baldes[nbalde]->agua;
-    baldes[nbalde]->agua = 0;
+    unsigned int aguaAtual = baldes[baldeN]->agua;
+    baldes[baldeN]->agua = 0;
+    soma = soma-aguaAtual;
     Baldes baldeNovo(*this); 
-    baldes[nbalde]->agua = aguaAtual;
+    baldes[baldeN]->agua = aguaAtual;
+    soma = soma + aguaAtual;
     
     return new Baldes(baldeNovo);
 }
 
-Baldes* Baldes::encheBalde(unsigned int nbalde)
+Baldes* Baldes::encheBalde(unsigned int baldeN)
 {
-    unsigned int aguaAtual = baldes[nbalde]->agua;
-    baldes[nbalde]->agua = baldes[nbalde]->capacidade;
+    unsigned int aguaAtual = baldes[baldeN]->agua;
+    unsigned int capacidadeBalde = baldes[baldeN]->capacidade;
+    baldes[baldeN]->agua = capacidadeBalde;
+    soma = soma - aguaAtual + capacidadeBalde;
     Baldes baldeNovo(*this); 
-    baldes[nbalde]->agua = aguaAtual;
+    baldes[baldeN]->agua = aguaAtual;
+    soma = soma + aguaAtual - capacidadeBalde;
 
     return new Baldes(baldeNovo);
 }
@@ -108,8 +114,9 @@ Baldes* Baldes::passaAgua(unsigned int baldeA, unsigned int baldeB)
 void Baldes::findSolucoes()
 {
     solucoes.push_back(nBaldes * nBaldes);
-    solucoes.push_back(primos[nBaldes]);
-    std::cout<<"solucoes:"<<solucoes[0]<<" "<<solucoes[1]<<"\n";
+    solucoes.push_back(primos[nBaldes]); 
+    //solucoes.push_back(-1);
+    
 }
 
 //Verificação de integridade
@@ -126,8 +133,9 @@ bool Baldes::getisValid()
 //Verificação de solução
 bool Baldes::getisSolution()
 {
+    /* unsigned int soma = 0;
     for(unsigned int i =0; i<nBaldes; i++)
-        soma+=baldes[i]->agua;
+        soma+=baldes[i]->agua; */
 
     for(unsigned int i = 0; i < solucoes.size() ; i++)
         if(soma==solucoes[i])
@@ -166,7 +174,7 @@ bool Baldes::getisSolution()
     }
 } */
 
-//se receber de 0 a 5, ele gera as mesmas regras da main
+
 Baldes* Baldes::executarRegra(unsigned int nRegra)
 {
     nRegra = nRegra+1;
@@ -211,10 +219,40 @@ void Baldes::print()
 //verifica se dois Baldes são iguais
 bool Baldes::isEqualTo(Baldes* balde2)
 {
-    for(unsigned int i =0; i< nBaldes; i++)
+    if(soma != balde2->soma)
+        return false;
+    else
     {
-        if(baldes[i]->agua != balde2->baldes[i]->agua)
-            return false;
+        for(unsigned int i =0; i< nBaldes; i++)
+        {
+            if(baldes[i]->agua != balde2->baldes[i]->agua)
+                return false;
+        }
     }
     return true;
+}
+
+unsigned int Baldes::getNBaldes()
+{
+    return nBaldes;
+}
+
+unsigned int Baldes::getAgua(unsigned int baldeN)
+{
+    return baldes[baldeN]->agua;
+}
+
+unsigned int Baldes::getCapacidade(unsigned int baldeN)
+{
+    return baldes[baldeN]->capacidade;
+}
+
+void Baldes::printSolucoes()
+{
+    std::cout<<"solucoes:"<<solucoes[0]<<" "<<solucoes[1]<<"\n";
+}
+
+unsigned int Baldes::getSoma()
+{
+    return soma;
 }
