@@ -3,7 +3,7 @@
 
 #include "Baldes.h"
 
-void BuscaIrrevogavel(int ordem[])
+void BuscaIrrevogavel(unsigned int nBaldes,bool crescente)
 {
 
 

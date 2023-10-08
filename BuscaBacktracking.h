@@ -3,7 +3,7 @@
 
 #include "Baldes.h"
 
-void BuscaBacktracking(int ordem[])
+void BuscaBacktracking(unsigned int nBaldes,bool crescente)
 {
 
 

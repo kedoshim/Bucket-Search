@@ -5,20 +5,46 @@
 #include "BuscaBacktracking.h"
 #include "BuscaEmLargura.h"
 #include "BuscaEmProfundidade.h"
+#include "BuscaOrdenada.h"
 
 int main()
 {
-    std::cout<<"Quantos baldes?\n";
-    unsigned int nBalde;
-    std::cin>>nBalde;
+    unsigned int busca;
+    while(busca!=0)
+    {
+        std::cout<<"--------------\n";
+        std::cout<<"Qual busca?\n";
+        std::cout<<"1 - Busca Irrevogavel\n";
+        std::cout<<"2 - Busca Backtracking\n";
+        std::cout<<"3 - Busca em Largura\n";
+        std::cout<<"4 - Busca em Profundidade\n";
+        std::cout<<"5 - Busca Ordenada\n";
 
-    std::cout<<"Ordem Crescente?(1=true  0=false)\n";
-    unsigned int crescente_int;
-    std::cin>>crescente_int;
+        std::cout<<"0 - Sair\n";
+        std::cin>>busca;
 
-    bool crescent = crescente_int==1 ? true : false;
+        if(busca==0) return 0;
 
-    BuscaEmProfundidade(nBalde,crescent);
+        std::cout<<"Quantos baldes?\n";
+        unsigned int nBalde;
+        std::cin>>nBalde;
+
+        std::cout<<"Ordem Crescente?(1=true  0=false)\n";
+        unsigned int crescente_int;
+        std::cin>>crescente_int;
+
+        bool crescent = crescente_int==1 ? true : false;
+
+        void (*funcoes[5])(unsigned int, bool) = {BuscaIrrevogavel, BuscaBacktracking, BuscaEmLargura, BuscaEmProfundidade, BuscaOrdenada};
+
+        // Verifica se o valor de busca é válido
+        if (busca >= 1 && busca <= 5) {
+            // Chama a função apropriada
+            funcoes[busca - 1](nBalde, crescent);
+        } else {
+            std::cout << "Opção inválida!\n";
+        }
+    }
 
     return 0;
 }

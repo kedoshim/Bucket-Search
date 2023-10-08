@@ -3,7 +3,7 @@
 
 #include "Baldes.h"
 
-void BuscaEmLargura(int ordem[])
+void BuscaEmLargura(unsigned int nBaldes,bool crescente)
 {
 
 
