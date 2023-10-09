@@ -1,9 +1,10 @@
 #include "Baldes.h"
 #include <functional>       
 #include <cmath>
+#include <limits>
 
 std::vector<unsigned int> Baldes::primos = {3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239};
-std::vector<unsigned int> Baldes::solucoes;
+std::vector<unsigned int> Baldes::solucoes(2);
 unsigned int Baldes::nBaldes = 2;
 
 Baldes::Baldes(){
@@ -110,11 +111,56 @@ Baldes* Baldes::passaAgua(unsigned int baldeA, unsigned int baldeB)
 
     return new Baldes(baldeNovo); // Return a dynamically allocated copy
 }
+bool is_prime(unsigned int num) {
+            if (num <= 1) return false;
+            if (num == 2) return true;
+            if (num % 2 == 0) return false;
+
+            for (unsigned int i = 3; i <= sqrt(num); i += 2) {
+                if (num % i == 0)
+                    return false;
+            }
+
+            return true;
+        }
+unsigned int find_closest_prime(unsigned int n) {
+    if (n <= 2) return 2;
+
+    unsigned int lower = n - 1;
+
+    while (true) {
+        if (is_prime(lower)) return lower;
+
+        lower--;
+    }
+}
+
+unsigned int find_closest_power_of_two(unsigned int n) {
+    n=n-1;
+    if (n <= 2) return 2;
+
+    unsigned int closest_power = 1;
+    while (closest_power <= n / 2) {
+        closest_power *= 2;
+    }
+
+    return closest_power;
+}
 
 void Baldes::findSolucoes()
 {
-    solucoes.push_back(nBaldes * nBaldes);
-    solucoes.push_back(primos[nBaldes]); 
+    
+    
+    unsigned somaCapacidade = 0;
+    for(unsigned i =0; i< nBaldes; i++)
+        somaCapacidade += baldes[i]->capacidade;
+
+    solucoes[0] = find_closest_power_of_two(somaCapacidade);
+
+    solucoes[1] = find_closest_prime(somaCapacidade); 
+
+    //solucoes[0] = (nBaldes * nBaldes)+(nBaldes-2)-(nBaldes/2);
+    //solucoes[1] = (primos[nBaldes]); 
     //solucoes.push_back(-1);
     
 }
@@ -256,3 +302,4 @@ unsigned int Baldes::getSoma()
 {
     return soma;
 }
+

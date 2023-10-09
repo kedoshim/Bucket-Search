@@ -9,8 +9,7 @@
 //Realiza a busca em profundidade para encontrar uma solução para o problema dos baldes com nBaldes
 void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
 {
-    //para medir o tempo
-    std::chrono::high_resolution_clock::time_point inicio = std::chrono::high_resolution_clock::now();
+    
 
     unsigned int n = 0;
     unsigned int regra;
@@ -27,7 +26,13 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
     std::stack<No*> pilha;
     //std::vector<No*> fechados;
     
-    unsigned int profundidadeMAX = nBaldes * 10;
+    unsigned int profundidadeMAX = nBaldes * 2;
+
+    //para medir o tempo
+    std::chrono::high_resolution_clock::time_point inicio = std::chrono::high_resolution_clock::now();
+
+    hash->inserirNo(noAtual);
+
     while(!(noAtual->getBaldes()->getisSolution()))
     { 
         //Visualização
@@ -57,8 +62,10 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
 
         }
         
-        else
-            std::cout<<"passei do limite :P \n";
+        else{
+            std::cout<<"> ";
+            //std::cout<<"passei do limite :P \n";
+        }
                 
         //estado atual vai para fechados
             //fechados.push_back(noAtual);
@@ -67,6 +74,7 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
         if(pilha.size()==0)
         {
             std::cout<<"Solucao nao encontrada! :( \n";
+            delete hash;
             return;
         }
         
@@ -82,16 +90,16 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
     }
 
     std::cout<<"Solucao encontrada!\n";
-    noAtual->getBaldes()->print();
+    noAtual->printCaminhoSolucao();
 
     std::cout<<"\nProfundidade: "<<noAtual->getProfundidade()<<"\n";
 
     hash->printStats();
 
-    delete hash;
-
     std::chrono::high_resolution_clock::time_point fim = std::chrono::high_resolution_clock::now();
     std::cout<<"Tempo "<<std::chrono::duration_cast<std::chrono::duration<double>>(fim - inicio).count()<<"\n";
+
+    delete hash;
 }
 
 #endif

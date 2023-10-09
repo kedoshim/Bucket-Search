@@ -8,6 +8,7 @@ class HashNo
 {
     private:
         std::vector<No*>* hashTable;
+        std::vector<No*>* substituidos;
         unsigned int tamanhoTabela;
         unsigned int valorAuxiliar;
         unsigned int nInsercoes;
@@ -52,7 +53,7 @@ class HashNo
 
             for(unsigned int i = 0; i < nb; i++) {
                 valor += pow(baldes->getAgua(i), ((i + 1) / limitante));
-                valor += ((baldes->getAgua(i)+1) * (baldes->getCapacidade(i)) * (baldes->getSoma()/(i+1)));
+                valor += ((baldes->getAgua(i)+1) * pow(baldes->getCapacidade(i),2) * (baldes->getSoma()/(i+1)));
             }
             return valor;
         }
@@ -82,6 +83,7 @@ class HashNo
             tamanhoTabela = find_closest_prime(394967295);
             valorAuxiliar = 2*tamanhoTabela/9;
             hashTable = new std::vector<No*>(tamanhoTabela);
+            substituidos = new std::vector<No*>(1000);
             No* null = nullptr;
             std::fill(hashTable->begin(), hashTable->end(), null);
         }
@@ -94,7 +96,13 @@ class HashNo
                 if(hashTable->at(i)!=nullptr)
                     delete hashTable->at(i);
             }
+            for(unsigned int i = 0; i < substituidos->size(); i++)
+            {
+                if(substituidos->at(i)!=nullptr)
+                    delete substituidos->at(i);
+            }
             delete hashTable;
+            delete substituidos;
         }
 
         //tenta inserir um nó na tabela
@@ -124,7 +132,7 @@ class HashNo
                         No* noAntigo = hashTable->at(index);
                         hashTable->at(index) = no;
 
-                        delete noAntigo;
+                        substituidos->push_back(noAntigo);
 
                         return true;
                     }

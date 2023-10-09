@@ -10,7 +10,7 @@ class No
 
         Baldes* baldes;
         No* pai;
-        unsigned int profundidade = 0;
+        unsigned int profundidade = 0; 
 
     public:
         No()
@@ -64,6 +64,20 @@ class No
             }
             return true;
         } 
+        void printCaminhoSolucao()
+        {
+            No* atual=this;
+
+            do
+            {
+                atual->getBaldes()->print();
+                //std::cout<<"-v-\n";
+                atual = atual->pai;
+                
+            }while(atual->pai!=nullptr);
+
+            atual->getBaldes()->print();
+        }
 };
 
 
