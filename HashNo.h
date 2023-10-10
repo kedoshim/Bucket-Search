@@ -3,6 +3,8 @@
 
 #include "No.h"
 #include <math.h>
+#include <sstream>
+#include <functional>
 
 class HashNo
 {
@@ -59,17 +61,34 @@ class HashNo
         }
 
         //Calcula qual deve ser o index de um no na tabela baseando-se no tamanho da tabela e o numero de colisoes que já ocorreram com esse no
-        unsigned int hash(No* no, unsigned int colisions,unsigned int h1,unsigned int h2)
-        {
-            double val = calculaValorNo(no);        
-            unsigned long int valor = (unsigned int)(val) % h1;    
+        unsigned int hash(No* no, unsigned int colisions, unsigned int h1, unsigned int h2) {
+            double val = calculaValorNo(no);
+            std::ostringstream oss;
+            oss << std::fixed << val; // Convert to string without scientific notation
+            oss << colisions; // Append collision count
 
-            unsigned int hash = valor + (colisions*(1+(valor%h2)));
+            std::hash<std::string> str_hash;
+            unsigned int hash = str_hash(oss.str());
 
-            hash = hash%h1;
+            return hash % h1;
+        }
+
+        /* unsigned int hash(No* no, unsigned int colisions, unsigned int h1, unsigned int h2) {
+            double val = calculaValorNo(no);
+
+            // Convert val to an unsigned long long int
+            unsigned long long int val_int = static_cast<unsigned long long int>(val);
+
+            // Combine val and colisions using bitwise XOR
+            unsigned long long int combined = val_int ^ colisions;
+
+            unsigned int hash = combined % h1;
 
             return hash;
-        }
+        } */
+
+
+
 
     public:
 

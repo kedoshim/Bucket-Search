@@ -303,3 +303,21 @@ unsigned int Baldes::getSoma()
     return soma;
 }
 
+int Baldes::doHeuristica(int i)
+{
+    int a;
+    int b;
+    switch (i)
+    {
+    case 0:
+        
+        a = (std::abs(static_cast<int>(soma - solucoes[0])));
+        b = (std::abs(static_cast<int>(soma - solucoes[1])));
+
+        return a<b?a:b;
+        break;
+    
+    default:
+        return 0;
+    }
+}

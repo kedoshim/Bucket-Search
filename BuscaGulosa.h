@@ -1,20 +1,14 @@
-#ifndef ORDENADA_H
-#define ORDENADA_H
+#ifndef GULOSA_H
+#define GULOSA_H
 
-#include "HashNo.h"
+#include "BuscaOrdenada.h"
 #include <queue>
 #include <chrono>
 #include <algorithm>
 
 
-struct NoOrdenada
-{
-    No* no;
-    int ponto;
-};
-
 //Realiza a busca em profundidade para encontrar uma solução para o problema dos baldes com nBaldes
-void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
+void BuscaGulosa(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
 {
     
 
@@ -37,7 +31,7 @@ void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento,
 
     std::priority_queue<NoOrdenada*, std::vector<NoOrdenada*>, 
                         std::function<bool(NoOrdenada*, NoOrdenada*)>> abertos(
-        [](NoOrdenada* a, NoOrdenada* b) { return a->ponto < b->ponto; }
+        [](NoOrdenada* a, NoOrdenada* b) { return a->ponto > b->ponto; }
     );
 
     //para medir o tempo
@@ -57,9 +51,7 @@ void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento,
             noFilho = new NoOrdenada;
             noFilho->no = new No(noAtual->no, noAtual->no->getBaldes()->executarRegra(regra));
 
-            //ponto igual ao custo de tudo somado até a origem
-            //O critério de desempate é quem foi inserido primeiro
-            noFilho->ponto = (std::abs(static_cast<int>(noFilho->no->getBaldes()->getSoma() - noAtual->no->getBaldes()->getSoma()))) + noAtual->ponto;
+            noFilho->ponto = noFilho->no->getBaldes()->doHeuristica(0);
 
             if (!(hash->inserirNo(noFilho->no)))
             {
@@ -91,8 +83,6 @@ void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento,
 
     if(printCaminhoSolucao)
         noAtual->no->printCaminhoSolucao();
-
-    std::cout<<"\nPontuacao Total: "<<noAtual->ponto;
 
     std::cout<<"\nProfundidade: "<<noAtual->no->getProfundidade()<<"\n";
 

@@ -3,7 +3,7 @@
 
 #include "Baldes.h"
 
-void BuscaBacktracking(unsigned int nBaldes,bool crescente)
+void BuscaBacktracking(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
 {
 
 

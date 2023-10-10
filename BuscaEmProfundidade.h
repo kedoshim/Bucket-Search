@@ -7,7 +7,7 @@
 
 
 //Realiza a busca em profundidade para encontrar uma solução para o problema dos baldes com nBaldes
-void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
+void BuscaEmProfundidade(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
 {
     
 
@@ -36,7 +36,8 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
     while(!(noAtual->getBaldes()->getisSolution()))
     { 
         //Visualização
-        noAtual->getBaldes()->print();
+        if(printProcessamento)
+            noAtual->getBaldes()->print();
 
         bool gerouFilho = false;
         if(noAtual->getProfundidade()<profundidadeMAX)
@@ -63,12 +64,9 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
         }
         
         else{
-            std::cout<<"> ";
+            //std::cout<<"> ";
             //std::cout<<"passei do limite :P \n";
         }
-                
-        //estado atual vai para fechados
-            //fechados.push_back(noAtual);
 
         
         if(pilha.size()==0)
@@ -90,7 +88,9 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente)
     }
 
     std::cout<<"Solucao encontrada!\n";
-    noAtual->printCaminhoSolucao();
+
+    if(printCaminhoSolucao)
+        noAtual->printCaminhoSolucao();
 
     std::cout<<"\nProfundidade: "<<noAtual->getProfundidade()<<"\n";
 

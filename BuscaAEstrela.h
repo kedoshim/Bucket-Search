@@ -1,20 +1,14 @@
-#ifndef ORDENADA_H
-#define ORDENADA_H
+#ifndef AESTRELA_H
+#define AESTRELA_H
 
-#include "HashNo.h"
+#include "BuscaGulosa.h"
 #include <queue>
 #include <chrono>
 #include <algorithm>
 
 
-struct NoOrdenada
-{
-    No* no;
-    int ponto;
-};
-
 //Realiza a busca em profundidade para encontrar uma solução para o problema dos baldes com nBaldes
-void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
+void BuscaAEstrela(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
 {
     
 
@@ -56,10 +50,7 @@ void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento,
             regra = static_cast<unsigned int>(std::abs(static_cast<int>(n - i)));
             noFilho = new NoOrdenada;
             noFilho->no = new No(noAtual->no, noAtual->no->getBaldes()->executarRegra(regra));
-
-            //ponto igual ao custo de tudo somado até a origem
-            //O critério de desempate é quem foi inserido primeiro
-            noFilho->ponto = (std::abs(static_cast<int>(noFilho->no->getBaldes()->getSoma() - noAtual->no->getBaldes()->getSoma()))) + noAtual->ponto;
+            noFilho->ponto = (std::abs(static_cast<int>(noFilho->no->getBaldes()->getSoma() - noAtual->no->getBaldes()->getSoma()))) - noFilho->no->getBaldes()->doHeuristica(0);
 
             if (!(hash->inserirNo(noFilho->no)))
             {
@@ -91,8 +82,6 @@ void BuscaOrdenada(unsigned int nBaldes,bool crescente, bool printProcessamento,
 
     if(printCaminhoSolucao)
         noAtual->no->printCaminhoSolucao();
-
-    std::cout<<"\nPontuacao Total: "<<noAtual->ponto;
 
     std::cout<<"\nProfundidade: "<<noAtual->no->getProfundidade()<<"\n";
 

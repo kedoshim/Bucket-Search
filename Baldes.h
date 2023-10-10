@@ -66,6 +66,7 @@ class Baldes
 
         void printSolucoes();
 
+        int doHeuristica(int i);
 
 };
 

@@ -3,7 +3,7 @@
 
 #include "Baldes.h"
 
-void BuscaEmLargura(unsigned int nBaldes,bool crescente)
+void BuscaEmLargura(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
 {
 
 

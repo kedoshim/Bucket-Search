@@ -3,7 +3,7 @@
 
 #include "Baldes.h"
 
-void BuscaIrrevogavel(unsigned int nBaldes,bool crescente)
+void BuscaIrrevogavel(unsigned int nBaldes,bool crescente, bool printProcessamento, bool printCaminhoSolucao)
 {
 
 
