@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <vector>
+#include <array>
 #include <string>
 #include <fstream>
 
 class Baldes
 {
+
 private:
     struct balde
     {

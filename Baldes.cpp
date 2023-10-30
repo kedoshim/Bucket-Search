@@ -52,14 +52,13 @@ Baldes *Baldes::passaA2B()
     {
         novaAguaB = baldes[1].agua + baldes[0].agua;
         novaAguaA = 0;
-        return new Baldes(novaAguaA, novaAguaB);
     }
     else
     {
         novaAguaB = baldes[1].agua + capacidadeRestanteB;
         novaAguaA = baldes[0].agua - capacidadeRestanteB;
-        return new Baldes(novaAguaA, novaAguaB);
     }
+    return new Baldes(novaAguaA, novaAguaB);
 }
 Baldes *Baldes::passaB2A()
 {
@@ -96,30 +95,35 @@ bool Baldes::getisSolution()
 // Escolha de regra
 Baldes *Baldes::executarRegra(int nRegra)
 {
+    Baldes *b = new Baldes(baldes[0].agua, baldes[1].agua);
+    b->isValid = false;
+
     switch (nRegra)
     {
     case 1:
-        return esvaziaBaldeA();
+        b = esvaziaBaldeA();
         break;
     case 2:
-        return esvaziaBaldeB();
+        b = esvaziaBaldeB();
         break;
     case 3:
-        return encheBaldeA();
+        b = encheBaldeA();
         break;
     case 4:
-        return encheBaldeB();
+        b = encheBaldeB();
         break;
     case 5:
-        return passaA2B();
+        b = passaA2B();
         break;
     case 6:
-        return passaB2A();
+        b = passaB2A();
         break;
 
     default:
         return new Baldes(-1, -1);
     }
+
+    return b;
 }
 
 // Printar os valores
