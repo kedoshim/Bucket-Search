@@ -1,7 +1,7 @@
 #include "BuscaIrrevogavel.h"
 #include "BuscaBacktracking.h"
 #include "BuscaEmLargura.h"
-#include "BuscaEmProfundidade.h"
+//#include "BuscaEmProfundidade.h"
 #include <sstream>
 
 using namespace std;
@@ -38,7 +38,7 @@ int main()
         i++;
     }
 
-    BuscaEmProfundidade(ordemRegras);
+    BuscaEmLargura(ordemRegras);
 
     return 0;
 }
