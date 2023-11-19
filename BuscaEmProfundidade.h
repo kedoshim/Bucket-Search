@@ -26,7 +26,7 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente, bool printProcessa
     std::stack<No*> pilha;
     //std::vector<No*> fechados;
     
-    unsigned int profundidadeMAX = nBaldes * 2;
+    unsigned int profundidadeMAX = nBaldes * 3;
 
     //para medir o tempo
     std::chrono::high_resolution_clock::time_point inicio = std::chrono::high_resolution_clock::now();
