@@ -3,39 +3,71 @@
 
 #include "Baldes.h"
 #include "No.h"
+#include <vector>
 
 void BuscaIrrevogavel(int ordem[])
 {
-    No *noAtual = new No();
-    No *noFilho, *aux;
+    No *estadoAtual = new No();
 
-    while (!(noAtual->getBaldes()->getisSolution()) && noAtual != nullptr)
+    while (!estadoAtual->getBaldes()->getisSolution())
     {
-        // Visualização
-        noAtual->getBaldes()->print();
+        bool regraAplicada = false;
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; ++i)
         {
-            aux = new No(noAtual, noAtual->getBaldes()->executarRegra(ordem[i]));
+            Baldes *novosBaldes = estadoAtual->getBaldes();
 
-            if (aux->checkUnico())
+            novosBaldes = novosBaldes->executarRegra(ordem[i]);
+            if (novosBaldes->getisValid())
             {
-                noFilho = aux;
-                break;
+                No *novoNo = new No(estadoAtual, novosBaldes);
+
+                if (novoNo->checkUnico())
+                {
+                    if (novoNo->getBaldes()->getisSolution())
+                    {
+                        std::cout << "Solucao encontrada na profundidade " << novoNo->getProfundidade() << std::endl;
+                        // Imprimir o estado da solução aqui
+                        std::vector<No *> caminho;
+                        No *noAtual = novoNo;
+                        while (noAtual != nullptr)
+                        {
+                            caminho.push_back(noAtual);
+                            noAtual = noAtual->getPai();
+                        }
+
+                        for (int i = caminho.size() - 1; i >= 0; --i)
+                        {
+                            caminho[i]->getBaldes()->print();
+                        }
+
+                        delete novoNo;
+                        delete estadoAtual;
+                        return;
+                    }
+
+                    estadoAtual = novoNo;
+                    regraAplicada = true;
+                    break;
+                }
+                else
+                {
+                    delete novosBaldes;
+                    delete novoNo;
+                }
             }
         }
 
-        noAtual = noFilho;
+        if (!regraAplicada)
+        {
+            std::cout << "Nenhuma regra pôde ser aplicada. Busca falhou." << std::endl;
+            delete estadoAtual;
+            return;
+        }
     }
 
-    if (!(noFilho->getBaldes()->getisSolution()))
-    {
-        std::cout << "A busca não encontrou solução.\n";
-        return;
-    }
-
-    std::cout << "Solucao encontrada!\n";
-    noAtual->getBaldes()->print();
+    std::cout << "Nao foi possivel encontrar uma solucao." << std::endl;
+    delete estadoAtual;
 }
 
 #endif
