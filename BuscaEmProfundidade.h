@@ -58,7 +58,7 @@ void BuscaEmProfundidade(unsigned int nBaldes,bool crescente, bool printProcessa
                 }
             }
 
-            if(!gerouFilho)
+            if(!gerouFilho && printProcessamento)
                 std::cout<<"Impasse -> Trocando de ramo\n";
 
         }

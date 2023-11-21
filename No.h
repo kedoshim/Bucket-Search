@@ -66,18 +66,24 @@ class No
         } 
         void printCaminhoSolucao()
         {
-            No* atual=this;
+            std::vector<No*> caminho;  // Usaremos um vetor para armazenar os nós do caminho
+
+            No* atual = this;
 
             do
             {
-                atual->getBaldes()->print();
-                //std::cout<<"-v-\n";
+                caminho.push_back(atual);
                 atual = atual->pai;
-                
-            }while(atual->pai!=nullptr);
+            } while (atual != nullptr);
 
-            atual->getBaldes()->print();
+            // Agora, imprimimos os valores em ordem inversa
+            for (int i = caminho.size() - 1; i >= 0; --i)
+            {
+                caminho[i]->getBaldes()->print();
+                //std::cout << "-v-\n";
+            }
         }
+
 };
 
 

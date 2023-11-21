@@ -15,7 +15,7 @@ int main()
 
     int busca=1;
     bool printProcessamento = false;
-    bool printSolucao = false;
+    bool printSolucao = true;
     while(busca!=0)
     {    
         std::cout<<"Quantos baldes?\n";

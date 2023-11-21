@@ -97,9 +97,7 @@ class HashNo
         {
             nInsercoes = 0;
             
-            tamanhoTabela = 16;
-
-            tamanhoTabela = find_closest_prime(394967295);
+            tamanhoTabela = find_closest_prime(94967295);
             valorAuxiliar = 2*tamanhoTabela/9;
             hashTable = new std::vector<No*>(tamanhoTabela);
             substituidos = new std::vector<No*>(1000);
