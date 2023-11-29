@@ -159,6 +159,11 @@ void Baldes::findSolucoes()
 
     solucoes[1] = find_closest_prime(somaCapacidade); 
 
+    if(nBaldes%2!=0){
+        solucoes[0];
+        solucoes[1]++;
+    }
+
     //solucoes[0] = (nBaldes * nBaldes)+(nBaldes-2)-(nBaldes/2);
     //solucoes[1] = (primos[nBaldes]); 
     //solucoes.push_back(-1);
@@ -315,6 +320,10 @@ int Baldes::doHeuristica(int i)
         b = (std::abs(static_cast<int>(soma - solucoes[1])));
 
         return a<b?a:b;
+        break;
+    case 1:
+        
+        return (pow(solucoes[0] - soma,2)+pow(solucoes[1] - soma,2));
         break;
     
     default:
