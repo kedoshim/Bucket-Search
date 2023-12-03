@@ -18,10 +18,18 @@ Baldes::Baldes(unsigned int numeroBaldes)
         numeroBaldes=47;
     nBaldes = numeroBaldes;
 
-    for(unsigned int i = 0; i< nBaldes; i++)
+    baldes.push_back(new balde());
+    baldes[0]->capacidade=3;
+    baldes.push_back(new balde());
+    baldes[1]->capacidade=5;
+
+    for(unsigned int i = 2; i< nBaldes; i++)
     {
         baldes.push_back(new balde());
-        baldes[i]->capacidade = primos[i];
+        /* baldes[i]->capacidade = primos[i];
+        maxSoma += primos[i]; */
+        baldes[i]->capacidade = baldes[i-2]->capacidade+baldes[i-1]->capacidade;
+        maxSoma += baldes[i-2]->capacidade+baldes[i-1]->capacidade;
     }   
 
     findSolucoes();
@@ -163,6 +171,9 @@ void Baldes::findSolucoes()
         solucoes[0];
         solucoes[1]++;
     }
+
+    /* solucoes[0] = maxSoma-1;
+    solucoes[1] = maxSoma-4; */
 
     //solucoes[0] = (nBaldes * nBaldes)+(nBaldes-2)-(nBaldes/2);
     //solucoes[1] = (primos[nBaldes]); 

@@ -10,7 +10,7 @@
 struct NoOrdenada
 {
     No* no;
-    int ponto;
+    int ponto=0;
 };
 
 //Realiza a busca em profundidade para encontrar uma solução para o problema dos baldes com nBaldes

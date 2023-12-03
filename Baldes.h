@@ -24,6 +24,7 @@ class Baldes
         std::vector<balde*> baldes;
 
         unsigned int soma = 0;
+        unsigned int maxSoma = 0;
 
         //Regras de Transição
         Baldes* esvaziaBalde(unsigned int balde);
